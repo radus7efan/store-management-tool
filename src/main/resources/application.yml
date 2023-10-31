@@ -1,3 +1,15 @@
 server:
   port: 8181
 
+springdoc:
+  api-docs:
+    enabled: true
+    groups:
+      enabled: true
+  packages-to-scan: com.demo.smt
+  writer-with-default-pretty-printer: true
+  swagger-ui:
+    enabled: true
+    display-request-duration: true
+    operationsSorter: alpha
+    displayOperationId: true

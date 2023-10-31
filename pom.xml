@@ -24,11 +24,18 @@
         <jakarta.servlet-api.version>4.0.2</jakarta.servlet-api.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <openapi-generator-maven-plugin.version>7.0.1</openapi-generator-maven-plugin.version>
-        <swagger-annotations.version>2.2.18</swagger-annotations.version>
+        <springdoc-openapi-starter-webmvc-ui.version>2.2.0</springdoc-openapi-starter-webmvc-ui.version>
+        <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
+        <swagger-core.version>2.2.18</swagger-core.version>
         <validation-api.versioon>2.0.1.Final</validation-api.versioon>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -36,8 +43,8 @@
         </dependency>
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-annotations.version}</version>
+            <artifactId>swagger-core</artifactId>
+            <version>${swagger-core.version}</version>
         </dependency>
         <dependency>
             <groupId>jakarta.servlet</groupId>
@@ -67,7 +74,12 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc-openapi-ui.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -110,8 +122,8 @@
                 <configuration>
                     <inputSpec>${project.basedir}/src/main/resources/openapi-store-management-tool.yml</inputSpec>
                     <output>${project.build.directory}/generated-sources/openapi</output>
-                    <apiPackage>com.demo.storemanagementtool.controller.rest.api</apiPackage>
-                    <modelPackage>com.demo.storemanagementtool.model.rest</modelPackage>
+                    <apiPackage>com.demo.smt.controller.rest.api</apiPackage>
+                    <modelPackage>com.demo.smt.model.rest</modelPackage>
                     <generatorName>spring</generatorName>
                     <generateApis>true</generateApis>
                     <generateApiTests>false</generateApiTests>

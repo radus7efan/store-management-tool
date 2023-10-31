@@ -1,4 +1,4 @@
-package com.demo.storemanagementtool;
+package com.demo.smt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

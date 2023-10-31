@@ -17,17 +17,40 @@ info:
 servers:
   - url: https://localhost:8181/api/swagger/
 tags:
-  - name: Item
+  - name: Items
     description: Operations that aim to manage store items.
-  - name: User
+  - name: Users
     description: Operations that aim to manage application users.
 paths:
+  /items:
+    post:
+      tags:
+        - Items
+      summary: Create new item.
+      description: This operation is used to create and insert a new item in the inventory.
+      operationId: createItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
   /items/{itemId}:
     get:
       tags:
-        - Item
-      summary: Fetch item by unique identifiier.
-      description: This operaion is used to retrieve an item by a unique identifier.
+        - Items
+      summary: Fetch item by unique identifier.
+      description: This operation is used to retrieve an item by a unique identifier.
       operationId: fetchItemById
       parameters:
         - $ref: '#/components/parameters/itemId'
@@ -38,7 +61,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Item'
-            application/xml:
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      tags:
+        - Items
+      summary: Update item by unique identifier.
+      description: This operation is used to update an item by a unique identifier.
+      operationId: updateItemById
+      parameters:
+        - $ref: '#/components/parameters/itemId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Item'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Item'
         '400':
@@ -47,6 +93,26 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+    delete:
+      tags:
+        - Items
+      summary: Delete item by unique identifier.
+      description: This operation is used to delete an item by a unique identifier.
+      operationId: deleteItemById
+      parameters:
+        - $ref: '#/components/parameters/itemId'
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+#
+# CREATE, UPDATE, DELETE - Users (?)
+#
 components:
   parameters:
     itemId:
@@ -139,7 +205,7 @@ components:
         description:
           type: string
           description: Item description.
-          example: A short description abot the product.
+          example: A short description about the product.
     StockStatus:
       title: Status of the product in the inventory.
       type: string
@@ -165,8 +231,8 @@ components:
           description: The HTTP status code.
         details:
           type: string
-          description: A human-readable explanation of the ocurred problem.
+          description: A human-readable explanation of the occurred problem.
         timestamp:
           type: string
           format: date-time
-          description: Date and time when the error ocurred.
+          description: Date and time when the error occurred.
