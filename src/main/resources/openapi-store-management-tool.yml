@@ -1,0 +1,172 @@
+openapi: '3.0.3'
+info:
+  version: 1.0.0
+  title: Store Management Tool
+  description: |-
+    Rest API definition of the store management tool application.
+
+    Some useful links:
+    - [Github repository](https://github.com/radus7efan/store-management-tool)
+    - [Readme](https://github.com/radus7efan/store-management-tool/blob/main/README.md)
+
+  contact:
+    name: Radu Stefan
+    email: radustef.an@yahoo.ro
+    url: https://github.com/radus7efan
+
+servers:
+  - url: https://localhost:8181/api/swagger/
+tags:
+  - name: Item
+    description: Operations that aim to manage store items.
+  - name: User
+    description: Operations that aim to manage application users.
+paths:
+  /items/{itemId}:
+    get:
+      tags:
+        - Item
+      summary: Fetch item by unique identifiier.
+      description: This operaion is used to retrieve an item by a unique identifier.
+      operationId: fetchItemById
+      parameters:
+        - $ref: '#/components/parameters/itemId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  parameters:
+    itemId:
+      name: itemId
+      in: path
+      required: true
+      description: >-
+        Unique item identifier used to update item.
+      example: 36411281-197e-4806-a610-17a81aa770ed
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '400':
+      description: Bad Request.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            title: Bad Request
+            status: 400
+            details: Error details
+            timestamp: '2023-10-07T12:23:58.075Z'
+    '404':
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            title: Resource not found
+            status: 404
+            details: Error details
+            timestamp: '2023-10-07T12:23:58.075Z'
+    '500':
+      description: Internal server error.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            title: Internal server error
+            status: 500
+            details: Error details
+            timestamp: '2023-10-07T12:23:58.075Z'
+  schemas:
+    Item:
+      type: object
+      title: Item
+      required:
+        - id
+        - title
+        - price
+        - quantity
+        - stockStatus
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Item unique identifier.
+          example: 36411281-197e-4806-a610-17a81aa770ed
+        title:
+          type: string
+          description: Item name.
+          example: Brand Keyboard
+        fullPrice:
+          type: number
+          format: float
+          description: Item price.
+          example: 254.23
+        quantity:
+          type: integer
+          format: int32
+          description: Quantity of items available in the inventory.
+          example: 34
+        stockStatus:
+          $ref: '#/components/schemas/StockStatus'
+          example: IN_STOCK
+        discount:
+          description: The discount applied to the product expressed as a percentage.
+          type: integer
+          format: int32
+          example: 10
+        discountedPrice:
+          type: number
+          format: float
+          description: Item price.
+          example: 254.23
+        description:
+          type: string
+          description: Item description.
+          example: A short description abot the product.
+    StockStatus:
+      title: Status of the product in the inventory.
+      type: string
+      enum:
+        - IN_STOCK
+        - OUT_OF_STOCK
+        - LIMITED
+    Error:
+      type: object
+      title: Error data structure
+      required:
+        - title
+        - status
+        - details
+        - timestamp
+      properties:
+        title:
+          type: string
+          description: A short human-readable summary of the problem.
+        status:
+          type: integer
+          format: int32
+          description: The HTTP status code.
+        details:
+          type: string
+          description: A human-readable explanation of the ocurred problem.
+        timestamp:
+          type: string
+          format: date-time
+          description: Date and time when the error ocurred.
