@@ -6,13 +6,13 @@ import com.demo.smt.model.rest.Product;
 import org.mapstruct.Mapper;
 
 /**
- * Item mapper class.
+ * Product mapper class.
  */
 @Mapper(
         componentModel = "spring",
         config = MappersConfig.class,
         uses = {
-                CommonMapper.class
+                CommonMapper.class, StockStatusMapper.class
         }
 )
 public interface ProductMapper {
@@ -20,17 +20,17 @@ public interface ProductMapper {
     /**
      * Mapping method from {@link Product} to {@link ProductEntity}.
      *
-     * @param item instance of {@link Product}
+     * @param product instance of {@link Product}
      * @return an instance of {@link ProductEntity}
      */
-    ProductEntity productToProductEntity(Product item);
+    ProductEntity productToProductEntity(Product product);
 
     /**
      * Mapping method from {@link ProductEntity} to {@link Product}.
      *
-     * @param item instance of {@link ProductEntity}
+     * @param product instance of {@link ProductEntity}
      * @return an instance of {@link Product}
      */
-    Product productEntityToProduct(ProductEntity item);
+    Product productEntityToProduct(ProductEntity product);
 
 }

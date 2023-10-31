@@ -52,6 +52,7 @@ paths:
       parameters:
         - name: stockStatus
           in: query
+          required: false
           description: Availability status of the product to filter and fetch products that match the criteria.
           schema:
             $ref: '#/components/schemas/StockStatus'

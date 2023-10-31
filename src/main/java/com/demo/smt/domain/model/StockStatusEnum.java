@@ -1,6 +1,6 @@
 package com.demo.smt.domain.model;
 
-public enum StockStatus {
+public enum StockStatusEnum {
     IN_STOCK,
     OUT_OF_STOCK,
     LIMITED;
