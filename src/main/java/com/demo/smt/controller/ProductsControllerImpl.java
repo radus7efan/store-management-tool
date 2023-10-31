@@ -1,8 +1,8 @@
 package com.demo.smt.controller;
 
-import com.demo.smt.controller.rest.api.ItemsApi;
-import com.demo.smt.model.rest.Item;
-import com.demo.smt.service.ItemsService;
+import com.demo.smt.controller.rest.api.ProductsApi;
+import com.demo.smt.model.rest.Product;
+import com.demo.smt.service.ProductsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +14,18 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api")
-public class ItemsControllerImpl implements ItemsApi {
+public class ProductsControllerImpl implements ProductsApi {
 
-    private final ItemsService itemsService;
+    private final ProductsService productsService;
 
     @Override
-    public ResponseEntity<Item> fetchItemById(UUID itemId) {
+    public ResponseEntity<Product> fetchProductById(UUID productId) {
         return new ResponseEntity<>(
-                itemsService.fetchItemById(itemId),
+                productsService.fetchProductById(productId),
                 HttpStatus.OK
         );
     }
+
+//    @Override
+//    public ResponseEntity<Item>
 }

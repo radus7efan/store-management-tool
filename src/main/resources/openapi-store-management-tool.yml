@@ -17,50 +17,71 @@ info:
 servers:
   - url: https://localhost:8181/api/swagger/
 tags:
-  - name: Items
-    description: Operations that aim to manage store items.
-  - name: Users
-    description: Operations that aim to manage application users.
+  - name: Products
+    description: Operations that aim to manage store products.
 paths:
-  /items:
+  /products:
     post:
       tags:
-        - Items
-      summary: Create new item.
-      description: This operation is used to create and insert a new item in the inventory.
-      operationId: createItem
+        - Products
+      summary: Add new productt.
+      description: This operation is used to add a new product in the inventory.
+      operationId: addProduct
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Item'
+              $ref: '#/components/schemas/Product'
       responses:
         '201':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/Product'
         '400':
           $ref: '#/components/responses/400'
         '500':
           $ref: '#/components/responses/500'
-  /items/{itemId}:
     get:
       tags:
-        - Items
-      summary: Fetch item by unique identifier.
-      description: This operation is used to retrieve an item by a unique identifier.
-      operationId: fetchItemById
+        - Products
+      summary: Fetch all available products.
+      description: This operation is used to retrieve all products.
+      operationId: fetchProducts
       parameters:
-        - $ref: '#/components/parameters/itemId'
+        - name: stockStatus
+          in: query
+          description: Availability status of the product to filter and fetch products that match the criteria.
+          schema:
+            $ref: '#/components/schemas/StockStatus'
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          $ref: '#/components/responses/500'
+  /products/{productId}:
+    get:
+      tags:
+        - Products
+      summary: Fetch product by unique identifier.
+      description: This operation is used to retrieve a product by a unique identifier.
+      operationId: fetchProductById
+      parameters:
+        - $ref: '#/components/parameters/productId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
         '400':
           $ref: '#/components/responses/400'
         '404':
@@ -69,24 +90,24 @@ paths:
           $ref: '#/components/responses/500'
     put:
       tags:
-        - Items
-      summary: Update item by unique identifier.
-      description: This operation is used to update an item by a unique identifier.
-      operationId: updateItemById
+        - Products
+      summary: Update product by unique identifier.
+      description: This operation is used to update a product by a unique identifier.
+      operationId: updateProductById
       parameters:
-        - $ref: '#/components/parameters/itemId'
+        - $ref: '#/components/parameters/productId'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Item'
+              $ref: '#/components/schemas/Product'
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Item'
+                $ref: '#/components/schemas/Product'
         '400':
           $ref: '#/components/responses/400'
         '404':
@@ -95,12 +116,12 @@ paths:
           $ref: '#/components/responses/500'
     delete:
       tags:
-        - Items
-      summary: Delete item by unique identifier.
-      description: This operation is used to delete an item by a unique identifier.
-      operationId: deleteItemById
+        - Products
+      summary: Delete product by unique identifier.
+      description: This operation is used to delete a product by a unique identifier.
+      operationId: deleteProductById
       parameters:
-        - $ref: '#/components/parameters/itemId'
+        - $ref: '#/components/parameters/productId'
       responses:
         '200':
           description: Successful operation
@@ -110,17 +131,14 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-#
-# CREATE, UPDATE, DELETE - Users (?)
-#
 components:
   parameters:
-    itemId:
-      name: itemId
+    productId:
+      name: productId
       in: path
       required: true
       description: >-
-        Unique item identifier used to update item.
+        Unique product identifier used to fetch, update or delete a product.
       example: 36411281-197e-4806-a610-17a81aa770ed
       schema:
         type: string
@@ -160,9 +178,9 @@ components:
             details: Error details
             timestamp: '2023-10-07T12:23:58.075Z'
   schemas:
-    Item:
+    Product:
       type: object
-      title: Item
+      title: Product
       required:
         - id
         - title
@@ -172,21 +190,21 @@ components:
         id:
           type: string
           format: uuid
-          description: Item unique identifier.
+          description: Product unique identifier.
           example: 36411281-197e-4806-a610-17a81aa770ed
         title:
           type: string
-          description: Item name.
+          description: Product name.
           example: Brand Keyboard
         price:
           type: number
           format: float
-          description: Item price.
+          description: Product price.
           example: 254.23
         quantity:
           type: integer
           format: int32
-          description: Quantity of items available in the inventory.
+          description: Quantity of products of the same type available in the inventory.
           example: 34
         stockStatus:
           $ref: '#/components/schemas/StockStatus'
@@ -198,11 +216,11 @@ components:
         discountedPrice:
           type: number
           format: float
-          description: Item price.
+          description: Product price.
           example: 254.23
         description:
           type: string
-          description: Item description.
+          description: Product description.
           example: A short description about the product.
     StockStatus:
       description: Status of the product in the inventory.

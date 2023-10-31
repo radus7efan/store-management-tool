@@ -8,9 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotNull;
 
 @Data
-@Document(collection = "items")
+@Document(collection = "products")
 @AllArgsConstructor
-public class ItemEntity {
+public class ProductEntity {
 
     @Id
     @NotNull
