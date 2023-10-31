@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -37,7 +36,7 @@ public class ProductsService {
         log.info("Calling method -- fetchProducts -- with stockStatus: {}", stockStatus);
 
         StockStatusEnum stockStatusValue = stockStatusMapper.stockStatusToStockStatusEnum(stockStatus);
-        List<ProductEntity> products = productRepository.findAllByStockStatus(stockStatusValue);
+        List<ProductEntity> products = productRepository.findAllByStatus(stockStatusValue);
 
         return products.stream()
                 .map(productMapper::productEntityToProduct)

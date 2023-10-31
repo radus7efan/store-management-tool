@@ -4,6 +4,7 @@ import com.demo.smt.config.MappersConfig;
 import com.demo.smt.domain.model.ProductEntity;
 import com.demo.smt.model.rest.Product;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Product mapper class.
@@ -23,6 +24,7 @@ public interface ProductMapper {
      * @param product instance of {@link Product}
      * @return an instance of {@link ProductEntity}
      */
+    @Mapping(target = "id", ignore = true)
     ProductEntity productToProductEntity(Product product);
 
     /**

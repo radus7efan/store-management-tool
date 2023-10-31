@@ -15,7 +15,9 @@ public interface ProductRepository extends CrudRepository<ProductEntity, Long> {
 
     Optional<ProductEntity> findById(Long productId);
 
-    List<ProductEntity> findAllByStockStatus(StockStatusEnum stockStatusEnum);
+    List<ProductEntity> findAllByStockStatus(StockStatusEnum status);
+
+    List<ProductEntity> findAll();
 
     ProductEntity save(ProductEntity product);
 
@@ -23,5 +25,9 @@ public interface ProductRepository extends CrudRepository<ProductEntity, Long> {
         return findById(productId)
                 .orElseThrow(() -> new StoreManagementToolException(HttpStatus.NOT_FOUND,
                         "Could not find the Product with id: %s!", productId));
+    }
+
+    default List<ProductEntity> findAllByStatus(StockStatusEnum status) {
+        return status == null ? findAll() : findAllByStockStatus(status);
     }
 }

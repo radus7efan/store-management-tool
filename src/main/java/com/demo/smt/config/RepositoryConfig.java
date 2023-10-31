@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
- * Configuration class for MongoDB.
+ * Configuration class for persistance layer.
  */
 @Configuration
 @EnableJpaRepositories({"com.demo.smt.persistance.repository"})
