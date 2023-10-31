@@ -129,7 +129,7 @@ components:
     '400':
       description: Bad Request.
       content:
-        application/problem+json:
+        application/json:
           schema:
             $ref: '#/components/schemas/Error'
           example:
@@ -140,7 +140,7 @@ components:
     '404':
       description: Resource not found.
       content:
-        application/problem+json:
+        application/json:
           schema:
             $ref: '#/components/schemas/Error'
           example:
@@ -151,7 +151,7 @@ components:
     '500':
       description: Internal server error.
       content:
-        application/problem+json:
+        application/json:
           schema:
             $ref: '#/components/schemas/Error'
           example:

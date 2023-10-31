@@ -4,11 +4,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * App configration.
+ * Configuration class for controller.
  */
 @Configuration
 @ComponentScan(basePackages = {
-        "com.demo.smt.config"
+        "com.demo.smt.controller"
 })
-public class AppConfig {
+public class ControllerConfig {
 }

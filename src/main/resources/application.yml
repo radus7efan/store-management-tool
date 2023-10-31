@@ -10,6 +10,9 @@ springdoc:
   writer-with-default-pretty-printer: true
   swagger-ui:
     enabled: true
+    use-root-path: true
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
     display-request-duration: true
     operationsSorter: alpha
     displayOperationId: true

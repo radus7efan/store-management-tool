@@ -4,11 +4,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * App configration.
+ * Configuration class for the service layer.
  */
 @Configuration
 @ComponentScan(basePackages = {
-        "com.demo.smt.config"
+        "com.demo.smt.service",
+        "com.demo.smt.transformer"
 })
-public class AppConfig {
+public class ServiceConfig {
 }
