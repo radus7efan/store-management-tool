@@ -25,7 +25,7 @@ public class ProductEntity {
     @NotNull
     private Integer quantity;
 
-    private StockStatusEnum stockStatusEnum;
+    private StockStatusEnum stockStatus;
 
     private Integer discount;
 
