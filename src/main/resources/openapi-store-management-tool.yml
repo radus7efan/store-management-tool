@@ -168,7 +168,6 @@ components:
         - title
         - price
         - quantity
-        - stockStatus
       properties:
         id:
           type: string
@@ -179,7 +178,7 @@ components:
           type: string
           description: Item name.
           example: Brand Keyboard
-        fullPrice:
+        price:
           type: number
           format: float
           description: Item price.
@@ -191,7 +190,6 @@ components:
           example: 34
         stockStatus:
           $ref: '#/components/schemas/StockStatus'
-          example: IN_STOCK
         discount:
           description: The discount applied to the product expressed as a percentage.
           type: integer
@@ -207,12 +205,13 @@ components:
           description: Item description.
           example: A short description about the product.
     StockStatus:
-      title: Status of the product in the inventory.
+      description: Status of the product in the inventory.
       type: string
       enum:
         - IN_STOCK
         - OUT_OF_STOCK
         - LIMITED
+      example: IN_STOCK
     Error:
       type: object
       title: Error data structure
