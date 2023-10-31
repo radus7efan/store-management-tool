@@ -118,9 +118,9 @@ paths:
     delete:
       tags:
         - Products
-      summary: Delete product by unique identifier.
-      description: This operation is used to delete a product by a unique identifier.
-      operationId: deleteProductById
+      summary: Remove product by unique identifier.
+      description: This operation is used to remove a product by a unique identifier.
+      operationId: removeProductById
       parameters:
         - $ref: '#/components/parameters/productId'
       responses:

@@ -21,6 +21,8 @@ public interface ProductRepository extends CrudRepository<ProductEntity, Long> {
 
     ProductEntity save(ProductEntity product);
 
+    void deleteById(Long productId);
+
     default ProductEntity findByIdRequired(Long productId) {
         return findById(productId)
                 .orElseThrow(() -> new StoreManagementToolException(HttpStatus.NOT_FOUND,

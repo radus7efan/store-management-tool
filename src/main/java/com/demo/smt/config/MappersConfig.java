@@ -1,9 +1,6 @@
 package com.demo.smt.config;
 
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.MapperConfig;
-import org.mapstruct.NullValueCheckStrategy;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 /**
  * Configuration for mapstruct mappers.
@@ -12,7 +9,8 @@ import org.mapstruct.ReportingPolicy;
         componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         unmappedTargetPolicy = ReportingPolicy.ERROR,
-        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 public interface MappersConfig {
 

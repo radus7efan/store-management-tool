@@ -42,4 +42,20 @@ public class ProductsControllerImpl implements ProductsApi {
                 HttpStatus.OK
         );
     }
+
+    @Override
+    public ResponseEntity<Product> updateProductById(Long productId, Product product) {
+        return new ResponseEntity<>(
+                productsService.updateProductById(productId, product),
+                HttpStatus.OK
+        );
+    }
+
+    @Override
+    public ResponseEntity<Void> removeProductById(Long productId) {
+        productsService.removeProductById(productId);
+        return new ResponseEntity<>(
+                HttpStatus.OK
+        );
+    }
 }

@@ -50,6 +50,22 @@ public class ProductsService {
         productRepository.save(newProduct);
 
         return productMapper.productEntityToProduct(newProduct);
+    }
 
+    public Product updateProductById(Long productId, Product updatedProduct) {
+        log.info("Calling method -- updateProductById -- with productId: {} and product: {}", productId, updatedProduct);
+
+        ProductEntity product = productRepository.findByIdRequired(productId);
+        productMapper.mapProduct(product, updatedProduct);
+        product = productRepository.save(product);
+
+        return productMapper.productEntityToProduct(product);
+    }
+
+    public void removeProductById(Long productId) {
+        log.info("Calling method -- removeProductById -- with productId: {}", productId);
+
+        ProductEntity product = productRepository.findByIdRequired(productId);
+        productRepository.deleteById(product.getId());
     }
 }
