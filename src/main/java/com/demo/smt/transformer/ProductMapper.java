@@ -12,7 +12,7 @@ import org.mapstruct.Mapper;
         componentModel = "spring",
         config = MappersConfig.class,
         uses = {
-                CommonMapper.class, StockStatusMapper.class
+                StockStatusMapper.class
         }
 )
 public interface ProductMapper {

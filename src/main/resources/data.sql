@@ -1,0 +1,1 @@
+INSERT INTO product_entity (id, title, price, quantity, stock_status, discount, discounted_price, description) VALUES (1, 'Brand Keyboard', 254.23, 34, 0, 0, 254.23, 'A short description about the product.');

@@ -24,7 +24,7 @@ paths:
     post:
       tags:
         - Products
-      summary: Add new productt.
+      summary: Add new product.
       description: This operation is used to add a new product in the inventory.
       operationId: addProduct
       requestBody:
@@ -140,10 +140,10 @@ components:
       required: true
       description: >-
         Unique product identifier used to fetch, update or delete a product.
-      example: 36411281-197e-4806-a610-17a81aa770ed
+      example: 123
       schema:
-        type: string
-        format: uuid
+        type: integer
+        format: int64
   responses:
     '400':
       description: Bad Request.
@@ -189,10 +189,10 @@ components:
         - quantity
       properties:
         id:
-          type: string
-          format: uuid
+          type: integer
+          format: int64
           description: Product unique identifier.
-          example: 36411281-197e-4806-a610-17a81aa770ed
+          example: 123
         title:
           type: string
           description: Product name.

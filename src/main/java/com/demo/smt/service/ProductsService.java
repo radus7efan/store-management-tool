@@ -25,10 +25,10 @@ public class ProductsService {
 
     private final StockStatusMapper stockStatusMapper;
 
-    public Product fetchProductById(UUID uuid) {
-        log.info("Calling method -- fetchProductById -- with uuid: {}", uuid);
+    public Product fetchProductById(Long productId) {
+        log.info("Calling method -- fetchProductById -- with id: {}", productId);
 
-        ProductEntity product = productRepository.findByIdRequired(uuid.toString());
+        ProductEntity product = productRepository.findByIdRequired(productId);
 
         return productMapper.productEntityToProduct(product);
     }
@@ -45,10 +45,10 @@ public class ProductsService {
     }
 
     public Product addProduct(Product product) {
-        log.info("Calling method -- addProduct -- with uuid: {}", product);
+        log.info("Calling method -- addProduct -- product: {}", product);
 
         ProductEntity newProduct = productMapper.productToProductEntity(product);
-        productRepository.insert(newProduct);
+        productRepository.save(newProduct);
 
         return productMapper.productEntityToProduct(newProduct);
 

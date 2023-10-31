@@ -11,17 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
+@RequestMapping("/api/v1/store-management")
 @RequiredArgsConstructor
-@RequestMapping(path = "/api")
 public class ProductsControllerImpl implements ProductsApi {
 
     private final ProductsService productsService;
 
     @Override
-    public ResponseEntity<Product> fetchProductById(UUID productId) {
+    public ResponseEntity<Product> fetchProductById(Long productId) {
         return new ResponseEntity<>(
                 productsService.fetchProductById(productId),
                 HttpStatus.OK

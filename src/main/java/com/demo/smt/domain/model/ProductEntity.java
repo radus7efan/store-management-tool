@@ -1,28 +1,32 @@
 package com.demo.smt.domain.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Data
-@Document(collection = "products")
+@Entity
+@NoArgsConstructor
 @AllArgsConstructor
 public class ProductEntity {
 
     @Id
-    @NotNull
-    private String id;
+    @GeneratedValue(strategy = IDENTITY)
+    private Long id;
 
-    @NotNull
+    @Column(nullable = false)
     private String title;
 
-    @NotNull
+    @Column(nullable = false)
     private Float price;
 
-    @NotNull
+    @Column(nullable = false)
     private Integer quantity;
 
     private StockStatusEnum stockStatus;
