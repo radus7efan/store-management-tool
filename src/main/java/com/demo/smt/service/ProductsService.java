@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -42,7 +41,16 @@ public class ProductsService {
 
         return products.stream()
                 .map(productMapper::productEntityToProduct)
-                .collect(Collectors.toList());
+                .toList();
     }
 
+    public Product addProduct(Product product) {
+        log.info("Calling method -- addProduct -- with uuid: {}", product);
+
+        ProductEntity newProduct = productMapper.productToProductEntity(product);
+        productRepository.insert(newProduct);
+
+        return productMapper.productEntityToProduct(newProduct);
+
+    }
 }

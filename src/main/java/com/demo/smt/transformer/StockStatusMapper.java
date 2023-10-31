@@ -8,10 +8,7 @@ import org.mapstruct.Mapper;
 /**
  * Stock status mapper class.
  */
-@Mapper(
-        componentModel = "spring",
-        config = MappersConfig.class
-)
+@Mapper(componentModel = "spring", config = MappersConfig.class)
 public interface StockStatusMapper {
 
     /**

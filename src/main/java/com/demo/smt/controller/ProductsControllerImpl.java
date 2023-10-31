@@ -35,4 +35,12 @@ public class ProductsControllerImpl implements ProductsApi {
                 HttpStatus.OK
         );
     }
+
+    @Override
+    public ResponseEntity<Product> addProduct(Product product) {
+        return new ResponseEntity<>(
+                productsService.addProduct(product),
+                HttpStatus.OK
+        );
+    }
 }

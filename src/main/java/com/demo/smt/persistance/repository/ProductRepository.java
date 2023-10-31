@@ -17,6 +17,8 @@ public interface ProductRepository extends MongoRepository<ProductEntity, String
 
     List<ProductEntity> findAllByStockStatus(StockStatusEnum stockStatusEnum);
 
+    ProductEntity insert(ProductEntity product);
+
     default ProductEntity findByIdRequired(String uuid) {
         return findById(uuid)
                 .orElseThrow(() -> new StoreManagementToolException(HttpStatus.NOT_FOUND,
