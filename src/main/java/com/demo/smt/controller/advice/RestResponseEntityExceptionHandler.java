@@ -2,6 +2,7 @@ package com.demo.smt.controller.advice;
 
 import com.demo.smt.exception.StoreManagementToolException;
 import com.demo.smt.model.rest.Error;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,11 +11,13 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import java.time.OffsetDateTime;
 
+@Slf4j
 @RestControllerAdvice
 public class RestResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {StoreManagementToolException.class})
     protected ResponseEntity<Error> handleStoreManagementToolException(StoreManagementToolException ex) {
+        log.error("An ERROR ocurred: ", ex);
         var error = new Error();
         error.setTitle(ex.getStatus().name());
         error.setDetails(ex.getMessage());
@@ -26,6 +29,7 @@ public class RestResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
     protected ResponseEntity<Error> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+        log.error("An ERROR ocurred: ", ex);
         var error = new Error();
         error.setTitle(HttpStatus.BAD_REQUEST.name());
         error.setDetails(ex.getMessage());
@@ -37,6 +41,7 @@ public class RestResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {Exception.class})
     protected ResponseEntity<Error> handleGeneralException(Exception ex) {
+        log.error("An ERROR ocurred: ", ex);
         var error = new Error();
         error.setTitle(HttpStatus.INTERNAL_SERVER_ERROR.name());
         error.setDetails("There was an error trying to process your request, please contact support.");

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -137,6 +138,24 @@ class ProductsControllerImplTest {
                 .andExpect(jsonPath("$.discount").value(product.getDiscount()))
                 .andExpect(jsonPath("$.discountedPrice").value(product.getDiscountedPrice()))
                 .andExpect(jsonPath("$.description").value(product.getDescription()));
+    }
+
+    @Test
+    void addInvalidProduct() throws Exception {
+        var product = createProduct();
+        product.setId(null);
+        product.setPrice(null);
+
+        when(productsService.addProduct(product)).thenThrow(new DataIntegrityViolationException("null"));
+
+        mockMvc.perform(post(PATH)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(asJsonString(product)))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.title").value(HttpStatus.INTERNAL_SERVER_ERROR.name()))
+                .andExpect(jsonPath("$.status").value(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+                .andExpect(jsonPath("$.details").isNotEmpty());
     }
 
     @Test
