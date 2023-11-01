@@ -25,6 +25,6 @@ public interface StockStatusMapper {
      * @param status instance of {@link StockStatusEnum}
      * @return an instance of {@link StockStatus}
      */
-    StockStatus stockStatusToStockStatusEnum(StockStatusEnum status);
+    StockStatus stockStatusEnumToStockStatus(StockStatusEnum status);
 
 }

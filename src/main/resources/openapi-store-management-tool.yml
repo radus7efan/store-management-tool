@@ -19,6 +19,8 @@ servers:
 tags:
   - name: Products
     description: Operations that aim to manage store products.
+  - name: Inventory
+    description: Operations that aim to manage store's inventory.
 paths:
   /products:
     post:
@@ -132,6 +134,22 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+  /inventory:
+    get:
+      tags:
+        - Inventory
+      summary: Get store inventory.
+      description: This operation is used to get the store's current inventory.
+      operationId: getStoreInventory
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inventory'
+        '500':
+          $ref: '#/components/responses/500'
 components:
   parameters:
     productId:
@@ -231,6 +249,54 @@ components:
         - OUT_OF_STOCK
         - LIMITED
       example: IN_STOCK
+    Inventory:
+      type: object
+      title: Inventory
+      properties:
+        totalPrice:
+          type: number
+          format: float
+          description: Total price of products.
+          example: 254.23
+        totalPriceWithDiscounts:
+          type: number
+          format: float
+          description: Total price of products with discounts.
+          example: 254.23
+        totalDiscountedPrice:
+          type: number
+          format: float
+          description: Total sum of discounts.
+          example: 254.23
+        discountedProducts:
+          type: integer
+          format: int32
+          description: Number of discounted products.
+          example: 254
+        inStockProducts:
+          type: integer
+          format: int32
+          description: Number of products in stock.
+          example: 254
+        limitedStockProducts:
+          type: integer
+          format: int32
+          description: Number of products in limited stock.
+          example: 254
+        outOfStockProducts:
+          type: integer
+          format: int32
+          description: Number of products out of stock.
+          example: 254
+        totalQuantity:
+          type: integer
+          format: int32
+          description: Total quantity of available products.
+          example: 254
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
     Error:
       type: object
       title: Error data structure
