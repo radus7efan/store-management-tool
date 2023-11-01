@@ -205,6 +205,8 @@
                 <configuration>
                     <excludes>
                         <exclude>**/*Application.*</exclude>
+                        <exclude>**/model/rest/*</exclude>
+                        <exclude>**/rest/api/*</exclude>
                         <exclude>**/persistance/**</exclude>
                         <exclude>**/config/**</exclude>
                         <exclude>**/domain/**</exclude>
