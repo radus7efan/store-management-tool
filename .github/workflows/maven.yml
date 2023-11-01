@@ -27,20 +27,30 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+        
     - name: Build with Maven
       run: mvn clean install
-    - name: Upload target folder
-      uses: actions/upload-artifact@v2
+
+    - name: Generate JaCoCo Badge
+      uses: cicirello/jacoco-badge-generator@v2
       with:
-        name: target
-        path: |
-          ${{ github.workspace }}/target
-          ${{ github.workspace }}/reports
-    - name: Test Report
-      uses: dorny/test-reporter@v1
-      if: success() || failure()
-      with:
-        name: Test Results
-        path: ${{ github.workspace }}/target/surefire-reports/TEST-TestSuite.xml
+        generate-branches-badge: true
         reporter: java-junit
         java-version: '17'
+        
+    - name: Generate JaCoCo Badge
+      uses: cicirello/jacoco-badge-generator@v2
+      with:
+        jacoco-csv-file: target/site/jacoco/jacoco.csv
+        badges-directory: .github/badges
+        generate-coverage-badge: true
+        coverage-badge-filename: jacoco.svg
+        generate-summary: true
+        summary-filename: coverage-summary.json
+        coverage-label: coverage
+        colors: '#4c1 #97ca00 #a4a61d #dfb317 #fe7d37 #e05d44'
+        intervals: 100 90 80 70 60 0
+        on-missing-report: fail
+        fail-if-coverage-less-than: 80
+        generate-workflow-summary: true
+        workflow-summary-heading: JaCoCo Test Coverage Summary
