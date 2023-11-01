@@ -159,8 +159,5 @@ Run in browser:
 </div>
 
 
-<p align="right"> ⬆️ <a href="#readme-top">back to top</a></p>
-
-
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/radu-stefan-710
