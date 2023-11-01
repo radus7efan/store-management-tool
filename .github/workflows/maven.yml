@@ -31,6 +31,24 @@ jobs:
         
     - name: Build with Maven
       run: mvn clean install
+      
+    - name: Generate JaCoCo Badge
+      uses: cicirello/jacoco-badge-generator@v2
+      with:
+        generate-branches-badge: true
+        reporter: java-junit
+        java-version: '17'
+        jacoco-csv-file: target/site/jacoco/jacoco.csv
+        badges-directory: .github/badges
+        generate-coverage-badge: true
+        coverage-badge-filename: jacoco.svg
+        generate-summary: true
+        summary-filename: coverage-summary.json
+        coverage-label: coverage
+        colors: '#4c1 #97ca00 #a4a61d #dfb317 #fe7d37 #e05d44'
+        intervals: 100 90 80 70 60 0
+        on-missing-report: fail
+        fail-if-coverage-less-than: 80
 
     - name: Log coverage percentage
       run: |
@@ -52,23 +70,5 @@ jobs:
       with:
         name: jacoco-report
         path: target/site/jacoco/
-        
-    - name: Generate JaCoCo Badge
-      uses: cicirello/jacoco-badge-generator@v2
-      with:
-        generate-branches-badge: true
-        reporter: java-junit
-        java-version: '17'
-        jacoco-csv-file: target/site/jacoco/jacoco.csv
-        badges-directory: .github/badges
-        generate-coverage-badge: true
-        coverage-badge-filename: jacoco.svg
-        generate-summary: true
-        summary-filename: coverage-summary.json
-        coverage-label: coverage
-        colors: '#4c1 #97ca00 #a4a61d #dfb317 #fe7d37 #e05d44'
-        intervals: 100 90 80 70 60 0
-        on-missing-report: fail
-        fail-if-coverage-less-than: 80
         generate-workflow-summary: true
         workflow-summary-heading: JaCoCo Test Coverage Summary
