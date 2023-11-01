@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ExtendWith(SpringExtension.class)
 class ProductsControllerImplTest {
 
     private static final String PATH = "/api/v1/store-management/products";
@@ -41,6 +41,7 @@ class ProductsControllerImplTest {
     private MockMvc mockMvc;
 
     @Test
+    @WithMockUser
     void fetchProductById() throws Exception {
         var product = createProduct();
 
@@ -59,6 +60,7 @@ class ProductsControllerImplTest {
     }
 
     @Test
+    @WithMockUser
     void fetchProductByNonExistingId() throws Exception {
         var product = createProduct();
         var ex = new StoreManagementToolException(HttpStatus.NOT_FOUND,
@@ -75,6 +77,7 @@ class ProductsControllerImplTest {
     }
 
     @Test
+    @WithMockUser
     void fetchProductByInvalidId() throws Exception {
         mockMvc.perform(get(PATH + "/sadas"))
                 .andExpect(status().isBadRequest())
@@ -85,6 +88,7 @@ class ProductsControllerImplTest {
     }
 
     @Test
+    @WithMockUser
     void fetchAllProducts() throws Exception {
         var product = createProduct();
 
@@ -103,6 +107,7 @@ class ProductsControllerImplTest {
     }
 
     @Test
+    @WithMockUser
     void fetchAllProductsByStatus() throws Exception {
         var product = createProduct();
 
@@ -121,6 +126,7 @@ class ProductsControllerImplTest {
     }
 
     @Test
+    @WithMockUser(roles = {"ADMIN"})
     void addProduct() throws Exception {
         var product = createProduct();
 
@@ -141,6 +147,7 @@ class ProductsControllerImplTest {
     }
 
     @Test
+    @WithMockUser(roles = {"ADMIN"})
     void addInvalidProduct() throws Exception {
         var product = createProduct();
         product.setId(null);
@@ -159,6 +166,7 @@ class ProductsControllerImplTest {
     }
 
     @Test
+    @WithMockUser(roles = {"ADMIN"})
     void updateProductById() throws Exception {
         var product = createProduct();
 
@@ -186,6 +194,7 @@ class ProductsControllerImplTest {
     }
 
     @Test
+    @WithMockUser(roles = {"ADMIN"})
     void removeProductById() throws Exception {
         var product = createProduct();
 

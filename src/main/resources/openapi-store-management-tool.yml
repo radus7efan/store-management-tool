@@ -21,6 +21,8 @@ tags:
     description: Operations that aim to manage store products.
   - name: Inventory
     description: Operations that aim to manage store's inventory.
+  - name: Token
+    description: Operations that aim to authenticate and obtain JWT.
 paths:
   /products:
     post:
@@ -43,9 +45,13 @@ paths:
                 $ref: '#/components/schemas/Product'
         '400':
           $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
     get:
+      security:
+        - bearerAuth: [ ]
       tags:
         - Products
       summary: Fetch all available products.
@@ -67,10 +73,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Product'
+        '401':
+          $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
   /products/{productId}:
     get:
+      security:
+        - bearerAuth: [ ]
       tags:
         - Products
       summary: Fetch product by unique identifier.
@@ -87,6 +97,8 @@ paths:
                 $ref: '#/components/schemas/Product'
         '400':
           $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -113,6 +125,8 @@ paths:
                 $ref: '#/components/schemas/Product'
         '400':
           $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -130,6 +144,8 @@ paths:
           description: Successful operation
         '400':
           $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -148,6 +164,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Inventory'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  /token:
+    post:
+      security: []
+      tags:
+        - Token
+      summary: Get JWT.
+      description: This operation is used to authenticate and receive JWT.
+      operationId: obtainToken
+      parameters:
+        - name: username
+          in: query
+          required: true
+          description: Username for authentication.
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          description: Password for authentication.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        '404':
+          $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
 components:
@@ -170,9 +220,20 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            title: Bad Request
+            title: BAD_REQUEST
             status: 400
             details: Error details
+            timestamp: '2023-10-07T12:23:58.075Z'
+    '401':
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            title: UNAUTHORIZED
+            status: 401
+            details: Access Denied
             timestamp: '2023-10-07T12:23:58.075Z'
     '404':
       description: Resource not found.
@@ -181,7 +242,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            title: Resource not found
+            title: NOT_FOND
             status: 404
             details: Error details
             timestamp: '2023-10-07T12:23:58.075Z'
@@ -192,7 +253,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            title: Internal server error
+            title: INTERNAL_SERVER_ERROR
             status: 500
             details: Error details
             timestamp: '2023-10-07T12:23:58.075Z'
@@ -297,6 +358,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Product'
+    Token:
+      type: object
+      title: Generated JWT.
+      properties:
+        token:
+          type: string
+          description: Generated JWT.
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
     Error:
       type: object
       title: Error data structure
@@ -320,3 +389,11 @@ components:
           type: string
           format: date-time
           description: Date and time when the error occurred.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      in: header
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []

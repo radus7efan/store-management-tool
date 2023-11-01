@@ -8,7 +8,7 @@
 </div>
 
 <div>
-<h2 align="center">Store Management Tool [SMT]</h2>
+<h2 align="center"> 🛍️ Store Management Tool [SMT] 🛍 </h2>
 
   <p align="center">
     ___________________________________
@@ -28,21 +28,43 @@
 
 - `Store management tool` is an application meant to be used for, as the name suggests, managing a store.
 - It exposes endpoints for managing products with basic operations as fetch, add, update, or remove a product
-and retrieving information about the current inventory of the store.
+and retrieving information about the current inventory of the store. 
+
 - The complete list of operations, as well as the structure of the products can be found in the swagger interface 
 (link in the [How to play](#how-to-play) section below).
+
 - The application is build API-first, so it uses the OpenAPI spec file where the APIs and the model is defined and
 generates them based on the definition.
-- For the persisting layer the application uses a h2 in memory database to store product related information.
+
+- For the persisting layer the application uses a h2 in memory database to store product related information and user
+information.
+
+- The application also supports a bearer authentication mechanism based on JSON Web Tokens (JWT).
+
+- The authentication mechanism does not yet support the addition of new users or 
+updating the existing ones. However, all endpoints are authorized, so they can only be called using a JWT, and all
+the operations can be accessed by the role of the user that makes the call. Fetch operations can be accesed by any user,
+regardless of their role, while the add, update or delete operations can only be accessed by an admin user.
+
+- The only unauthorized endpoint is the one used for authentication which requires a username and a password as query
+parameters.
+
+- For testing purpose there are 2 users inserted in the database at startup, one with USER role and one with ADMIN role.
+
+
 - Available operations:
   - Products
     - Fetch product by unique identifier. ( *fetchProductById* )
     - Update product by unique identifier. ( *updateProductById* )
     - Remove product by unique identifier. ( *removeProductById* )
     - Fetch all available products with the possibility to filter by stock status. (*fetchProducts*)
-    - Add new product.  (*addProduct*)
+    - Add new product. (*addProduct*)
   - Inventory
     - Get store inventory. (*getStoreInventory*)
+  - Authenticate
+    - Autheticate & obtain token. (*obtainToken*)
+
+
 - Product example:
 ```json
 {
@@ -138,8 +160,7 @@ Run in browser:
 
 · service direct call through the swagger interface ·
 
-![swagger.png](swagger.png)
-
+![img.png](swagger-ui.png)
 ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 
 [Postman Collection](Store-management-tool.postman_collection.json)

@@ -1,27 +1,25 @@
 package com.demo.smt.controller;
 
-import com.demo.smt.controller.rest.api.InventoryApi;
-import com.demo.smt.model.rest.Inventory;
-import com.demo.smt.service.InventoryService;
+import com.demo.smt.controller.rest.api.TokenApi;
+import com.demo.smt.model.rest.Token;
+import com.demo.smt.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/store-management")
 @RequiredArgsConstructor
-public class InventoryControllerImpl implements InventoryApi {
+public class AuthenticationControllerImpl implements TokenApi {
 
-    private final InventoryService inventoryService;
+    private final AuthenticationService authenticationService;
 
     @Override
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Inventory> getStoreInventory() {
+    public ResponseEntity<Token> obtainToken(String username, String password) {
         return new ResponseEntity<>(
-                inventoryService.getStoreInventory(),
+                authenticationService.authenticate(username, password),
                 HttpStatus.OK
         );
     }

@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import org.hibernate.annotations.Parameter;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "products")
 @EntityListeners(ProductEventListener.class)
 public class ProductEntity {
 

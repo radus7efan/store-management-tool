@@ -59,10 +59,20 @@
 		{
 			"name": "Fetch Product by Id",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNjk4ODU0OTYyLCJleHAiOjE2OTg4NTY3NjJ9.r_nCi6XNpkGk1II-Nkfkq-4dn0IsB2WuqjyCN3oVR2PfAUXa9mHKEswqqzrRX0ZZ",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8181/api/v1/store-management/products/3",
+					"raw": "http://localhost:8181/api/v1/store-management/products/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -73,7 +83,7 @@
 						"v1",
 						"store-management",
 						"products",
-						"3"
+						"1"
 					]
 				}
 			},
@@ -82,6 +92,16 @@
 		{
 			"name": "Add Product",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY5ODg1ODQ3OCwiZXhwIjoxNjk4ODYwMjc4fQ.8m-GaoBzLvkA3scmDzLAsFkRLucb04RQEWeumWxuKt62pXNV6ltMqJpp63bNGKDN",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -183,6 +203,38 @@
 						"v1",
 						"store-management",
 						"inventory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authenticate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8181/api/v1/store-management/token?username=admin&password=admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"api",
+						"v1",
+						"store-management",
+						"token"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "admin"
+						},
+						{
+							"key": "password",
+							"value": "admin"
+						}
 					]
 				}
 			},

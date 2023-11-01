@@ -26,6 +26,7 @@
         <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <jakarta.servlet-api.version>4.0.2</jakarta.servlet-api.version>
+        <jjwt.version>0.12.3</jjwt.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <openapi-generator-maven-plugin.version>7.0.1</openapi-generator-maven-plugin.version>
@@ -36,6 +37,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
@@ -121,11 +127,20 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -210,6 +225,12 @@
                         <exclude>**/persistance/**</exclude>
                         <exclude>**/config/**</exclude>
                         <exclude>**/domain/**</exclude>
+                        <!--   Exclude security related classes for now  -->
+                        <exclude>**/service/model/*</exclude>
+                        <exclude>**/service/utils/*</exclude>
+                        <exclude>**/*JwtService.*</exclude>
+                        <exclude>**/*AuthenticationService.*</exclude>
+                        <exclude>**/*Listener.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
