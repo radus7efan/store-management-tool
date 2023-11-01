@@ -1,5 +1,6 @@
 package com.demo.smt.controller;
 
+import com.demo.smt.exception.StoreManagementToolException;
 import com.demo.smt.model.rest.Product;
 import com.demo.smt.service.ProductsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -53,6 +55,32 @@ class ProductsControllerImplTest {
                 .andExpect(jsonPath("$.discount").value(product.getDiscount()))
                 .andExpect(jsonPath("$.discountedPrice").value(product.getDiscountedPrice()))
                 .andExpect(jsonPath("$.description").value(product.getDescription()));
+    }
+
+    @Test
+    void fetchProductByNonExistingId() throws Exception {
+        var product = createProduct();
+        var ex = new StoreManagementToolException(HttpStatus.NOT_FOUND,
+                "Could not find the Product with id: %s!", product.getId());
+
+        when(productsService.fetchProductById(product.getId())).thenThrow(ex);
+
+        mockMvc.perform(get(PATH + "/" + product.getId()))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.title").value(ex.getStatus().name()))
+                .andExpect(jsonPath("$.status").value(ex.getStatus().value()))
+                .andExpect(jsonPath("$.details").value(ex.getMessage()));
+    }
+
+    @Test
+    void fetchProductByInvalidId() throws Exception {
+        mockMvc.perform(get(PATH + "/sadas"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.title").value(HttpStatus.BAD_REQUEST.name()))
+                .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()))
+                .andExpect(jsonPath("$.details").isNotEmpty());
     }
 
     @Test
