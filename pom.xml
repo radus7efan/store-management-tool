@@ -204,9 +204,10 @@
                 <version>0.8.11</version>
                 <configuration>
                     <excludes>
-                        <exclude>**/*Enum.*</exclude>
-                        <exclude>**/*Repository.*</exclude>
+                        <exclude>**/*Application.*</exclude>
+                        <exclude>**/persistance/**</exclude>
                         <exclude>**/config/**</exclude>
+                        <exclude>**/domain/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>

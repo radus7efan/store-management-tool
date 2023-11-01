@@ -2,6 +2,7 @@ package com.demo.smt.service;
 
 import com.demo.smt.domain.model.ProductEntity;
 import com.demo.smt.domain.model.StockStatusEnum;
+import com.demo.smt.exception.StoreManagementToolException;
 import com.demo.smt.model.rest.Product;
 import com.demo.smt.model.rest.StockStatus;
 import com.demo.smt.persistance.repository.ProductRepository;
@@ -13,12 +14,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
 import static com.demo.smt.utils.ProductUtils.createProduct;
 import static com.demo.smt.utils.ProductUtils.createProductEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,6 +52,20 @@ class ProductsServiceTest {
         var result = productsService.fetchProductById(product.getId());
 
         assertProduct(product, result);
+    }
+
+    @Test
+    void fetchProductByNonExistentId() {
+        Product product = createProduct();
+
+        when(productRepository.findByIdRequired(product.getId()))
+                .thenThrow(new StoreManagementToolException(HttpStatus.NOT_FOUND,
+                        "Could not find the Product with id: %s!", product.getId()));
+
+        var result = assertThrows(StoreManagementToolException.class, () -> productsService.fetchProductById(product.getId()));
+
+        assertEquals(String.format("Could not find the Product with id: %s!", product.getId()), result.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, result.getStatus());
     }
 
     @Test

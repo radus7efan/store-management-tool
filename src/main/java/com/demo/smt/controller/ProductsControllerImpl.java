@@ -39,7 +39,7 @@ public class ProductsControllerImpl implements ProductsApi {
     public ResponseEntity<Product> addProduct(Product product) {
         return new ResponseEntity<>(
                 productsService.addProduct(product),
-                HttpStatus.OK
+                HttpStatus.CREATED
         );
     }
 
