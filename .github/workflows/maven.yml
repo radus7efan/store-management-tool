@@ -41,6 +41,7 @@ jobs:
         jacoco-csv-file: target/site/jacoco/jacoco.csv
         badges-directory: .github/badges
         generate-coverage-badge: true
+        generate-coverage-endpoint: true
         coverage-badge-filename: jacoco.svg
         generate-summary: true
         summary-filename: coverage-summary.json
