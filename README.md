@@ -4,8 +4,7 @@
  <a href=".">![GitHub contributors](https://img.shields.io/github/contributors/radus7efan/store-management-tool)</a>
  <a href=".">![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/radus7efan/store-management-tool)</a>
  <a href=".">![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/radus7efan/store-management-tool/maven.yml)</a>
- <a href=".">![Gitlab code coverage (self-managed, specific job)](https://img.shields.io/gitlab/pipeline-coverage/radus7efan%2Fstore-management-tool)</a>
-
+ <a href=".">![Gitlab code coverage (self-managed, specific job)](.github/badges/jacoco.svg)</a>
 </div>
 
 <div>
